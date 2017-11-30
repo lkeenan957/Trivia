@@ -3,23 +3,42 @@
   <head>
     <meta charset="utf-8">
     <title>Trivia</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
 
   </head>
   <body>
 
-    <div id ="container">
-      <div id ="buttons">
-        <button id="start">Start</button>
-      </div>
-      <div id="quiz">
-        <div id="timer"></div>
-        <div id="displayQuestions"></div>
-      </div>
+      <div class = "wrapper">
+        <div class = "heading">
+          <header>Math Trivia </header>
+          <nav><h3> .. 30 seconds to answer as muchas you can .. </h3></nav>
+        </div>
 
-    </div>
+        <div class ="container">
+          <div id ="buttons">
+            <button id="start">Start</button>
+          </div>
+          <div id="quiz">
+            <div id="timer"></div>
+            <div id="displayQuestions">
+              <div id="question">
+              </div>
+              <div id="answers">
+              </div>
+            </div>
+            <div id="scoreDisplay">
+              <div id="correctAnswers">
+              </div>
+              <div id="WrongAnswers">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="app.js"></script>
+    <script src="./assets/javascript/app.js"></script>
 
   </body>
 </html>
