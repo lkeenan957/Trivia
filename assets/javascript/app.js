@@ -56,21 +56,31 @@ var nextQuestion = 0;
 //then we want to genereate another question
   //prob a func
 function generateQuestion (){
-  startTimer()
 
-  questionDOM.empty()
-  answerDOM.empty()
-  $("#displayQuestions").append("<br>");
-  questionDOM.append("1" + "." + " " + questions[nextQuestion].question);
+
+  var outerDiv = $("<div id='outerDiv'>")
+  var questionDiv = $("<div id='question'>")
+  var answersDiv = $("<div id='answers'>")
+
+
+  questionDiv.append(nextQuestion + 1 + "." + " " + questions[nextQuestion].question);
 
   for (var i = 0; i < questions[nextQuestion].answers.length; i++) {
-      var btn = $("<button>");
-      btn.append(questions[nextQuestion].answers[i]);
-      btn.attr("data-answer", questions[nextQuestion].answers[i]);
-      btn.attr("id", "answer")
+
+    var radioBtn = $('<input type="radio" name="question-' + nextQuestion + '" />');
+    // <label for="contactChoice1">Email</label>
+    var label = $("<label for='question-'" + nextQuestion + "'> " + questions[nextQuestion].answers[i] + " </label>")
+
+      radioBtn.attr("value", questions[nextQuestion].answers[i]);
+      radioBtn.attr("id", "question-" + nextQuestion);
       //show btn on screen
-    answerDOM.append(btn)
+    answersDiv.append(radioBtn).append(label)
+    answersDiv.append("<br>")
     }
+    outerDiv.append(questionDiv).append(answersDiv)
+  $("#displayQuestions").append(outerDiv)
+  $("#displayQuestions").append("<br>")
+  nextQuestion++
 }
 
 //they can click on one onf the answers and if its correct we increment a counter
@@ -86,13 +96,11 @@ function generateQuestion (){
     --countDown
     //each second we want to redisplay the var for timer coundown on the screen
     $("#timer").text("Timer: " + countDown)
-    do{
-      generateQuestion()
-    }
-    while(countDown == 0)
 
     //if cowntdown var is 0 call next question
-    calculateScore()
+
+    // calculateScore()
+
     if (countDown === 0) {
       //increment out next question var
       // ++nextQuestion
@@ -103,26 +111,29 @@ function generateQuestion (){
       // //display next question
 
       clearInterval(clear)
+      generateQuestion.clear()
       revealAnswer()
     }
   }
 
-  function calculateScore(){
-    $("#answer").on("click", function(){
-      if($("#answer").val() === questions[nextQuestion].correctAns){
-        console.log("You got the correct the correct answer");
-        correctAns++;
-        $("#correctAnswers").append("<p> Coreect Answer </p>");
-      }
-      else{
-        console.log("Wrong answer");
-        wrongAns++;
-        $("#wrongAnswers").append("<p> Your answer is wrong! Correct Answer is "+ questions[nextQuestion].correctAns + "</p>");
-      }
-    })
-  }
+  // function calculateScore(){
+  //   $("#answer").on("click", function(){
+  //     if($("#answer").val() === questions[nextQuestion].correctAns){
+  //       console.log("You got the correct the correct answer");
+  //       correctAns++;
+  //       $("#correctAnswers").append("<p> Coreect Answer </p>");
+  //     }
+  //     else{
+  //       console.log("Wrong answer");
+  //       wrongAns++;
+  //       $("#wrongAnswers").append("<p> Your answer is wrong! Correct Answer is "+ questions[nextQuestion].correctAns + "</p>");
+  //     }
+  //   })
+  // }
 
   function revealAnswer(){
+    $('input[type="question-"' + i +']:checked').val()
+
       if(correctAns > wrongAns){
         congratsAudio.play();
 
@@ -152,8 +163,29 @@ function generateQuestion (){
 
 
 
-  $("#start").on("click", function(){
-    $("#timer").text("Timer: "+ countDown)
-    console.log("hi");
-    generateQuestion();
-  })
+$("#start").on("click", function(){
+  $("#timer").text("Timer: "+ countDown)
+  console.log("hi");
+  startTimer()
+  do {
+    generateQuestion()
+  } while (nextQuestion < questions.length - 1)
+})
+
+$("#displayQuestions").on("click", "#answer", function () {
+  if ($("#answer").val() === questions[nextQuestion].correctAns) {
+    console.log("You got the correct the correct answer");
+    correctAns++;
+    $("#correctAnswers").append("<p> Corect Answer </p>");
+  }
+  else {
+    console.log("Wrong answer");
+    wrongAns++;
+    $("#wrongAnswers").append("<p> Your answer is wrong! Correct Answer is " + questions[nextQuestion].correctAns + "</p>");
+  }
+})
+
+//this is how to get the values out of raio buttons
+for(var i = 0; i < questions.length; i++) {
+  $('input[type="question-"' + i +']:checked').val()
+}

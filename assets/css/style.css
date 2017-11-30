@@ -7,17 +7,19 @@ body{
   background-image: url(../images/bg2.jpg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  height: 700px;
-  width: 75%;
+  height: 100%;
+  width: 90%;
 
 
 }
 .wrapper{
   background-color: orange;
   padding-left: 10%;
-  margin-left: 15%;
+  margin-left: 5%;
+  margin-right: 10%;
   margin-top: 20%;
   width: 75%;
+  height: 10%;
 }
 
 .heading{
@@ -46,9 +48,6 @@ nav{
 
 }
 
-.wrapper{
-  background-color: orange;
-}
 .container{
   position: relative;
   width: 85%;
@@ -59,7 +58,7 @@ nav{
   margin-right: 5%;
   margin-left: 5%;
   padding-bottom: 3%;
-  height: 150px;
+  height: 80%;
 }
 
 #start{
