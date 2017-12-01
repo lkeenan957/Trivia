@@ -65,6 +65,7 @@ function generateQuestion (){
 
   questionDiv.append(nextQuestion + 1 + "." + " " + questions[nextQuestion].question);
 
+
   for (var i = 0; i < questions[nextQuestion].answers.length; i++) {
 
     var radioBtn = $('<input type="radio" name="question-' + nextQuestion + '" />');
@@ -78,8 +79,9 @@ function generateQuestion (){
     answersDiv.append("<br>")
     }
     outerDiv.append(questionDiv).append(answersDiv)
+    outerDiv.append("<br>")
+
   $("#displayQuestions").append(outerDiv)
-  $("#displayQuestions").append("<br>")
   nextQuestion++
 }
 
@@ -96,6 +98,7 @@ function generateQuestion (){
     --countDown
     //each second we want to redisplay the var for timer coundown on the screen
     $("#timer").text("Timer: " + countDown)
+    $("#timer").append("<br>");
 
     //if cowntdown var is 0 call next question
 
@@ -111,7 +114,6 @@ function generateQuestion (){
       // //display next question
 
       clearInterval(clear)
-      generateQuestion.clear()
       revealAnswer()
     }
   }
@@ -132,8 +134,6 @@ function generateQuestion (){
   // }
 
   function revealAnswer(){
-    $('input[type="question-"' + i +']:checked').val()
-
       if(correctAns > wrongAns){
         congratsAudio.play();
 
@@ -173,15 +173,21 @@ $("#start").on("click", function(){
 })
 
 $("#displayQuestions").on("click", "#answer", function () {
-  if ($("#answer").val() === questions[nextQuestion].correctAns) {
-    console.log("You got the correct the correct answer");
-    correctAns++;
-    $("#correctAnswers").append("<p> Corect Answer </p>");
-  }
-  else {
-    console.log("Wrong answer");
-    wrongAns++;
-    $("#wrongAnswers").append("<p> Your answer is wrong! Correct Answer is " + questions[nextQuestion].correctAns + "</p>");
+  for(var i = 0; i < questions.length; i++) {
+    var value = $('input[type="question-"' + i +']:checked').val()
+
+    if (value === questions[i].correctAns) {
+      console.log("You got the correct the correct answer");
+      correctAns++;
+      console.log(correctAns);
+      // $("#correctAnswers").append("<p> Corect Answer </p>");
+    }
+    else {
+      console.log("Wrong answer");
+      wrongAns++;
+      console.log(wrongAns);
+      // $("#wrongAnswers").append("<p> Your answer is wrong! Correct Answer is " + questions[nextQuestion].correctAns + "</p>");
+    }
   }
 })
 
